@@ -1,0 +1,58 @@
+﻿@model Plasma_Work_01.Models.CoronaPositivePaitent
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="card" style="width: 50rem; background-color:lightsalmon; position:center;">
+    <div class="card-body">
+
+        <img src="~/Pictures/bg6.jpg" style="opacity:40" class="card-img-top" height="270" alt="Pic">
+        <h4 class="card-title" style="text-align:center">Delete Corona Paitent's Record</h4>
+
+        <div class="row">
+            <div class="col-2 text-right">
+                Paitent Name
+            </div>
+            <div>
+                @Model.PaitentName
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2 text-right">
+                Hospital or Home
+            </div>
+            <div>
+                @Model.Hospitalorhome
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-right">
+                Contact No
+            </div>
+            <div>
+                @Model.ContactNo
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-right">
+               Plasma Donation Id
+            </div>
+            <div>
+                @Model.PlasmaDonationId
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 offset-3">
+                @using (Html.BeginForm())
+                {
+                    @Html.HiddenFor(x => x.CoronaPositivePaitentId)
+                    <input type="submit" value="Confirm" class="btn btn-danger btn-sm" />
+                }
+            </div>
+
+        </div>
+    </div>
+    @Html.ActionLink("Back to Corona Paitent Record", "Index")
+</div>
+

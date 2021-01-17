@@ -1,0 +1,236 @@
+﻿@model Plasma_Work_01.Models.CoronaPositivePaitent
+@{
+    /**/
+
+    ViewBag.Title = "Create";
+}
+<div style="background-color:paleturquoise;">
+    <h2>Add Corona Paitent and Reasons For Unrecovered</h2>
+    @using (Html.BeginForm("CreatePost", "CoronaPaitentAndReasons", FormMethod.Post, new { id = "feq", onesubmit = "javascript:return false;" }))
+    {
+        //alert
+        <div class="row">
+            <div class="col-12">
+                <div role="alert" id="alert" class="alert alert-suceess" style="display:none">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="alert-heading" id="msg-heading">Result</h4>
+                    <p id="msg"></p>
+
+                </div>
+            </div>
+        </div>
+        //main
+        <div class="row">
+            <div class="col-6">
+                <h4>Corona Paitent</h4>
+                @*script for var coronapaitent line 103*@
+                <div>
+                    @Html.LabelFor(x => x.PlasmaDonationId)
+                    @Html.DropDownListFor(x => x.PlasmaDonationId, new SelectList(ViewBag.PlasmaDonations, "PlasmaDonationId", "DonatorName"), "Select type", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.PlasmaDonationId, "", new { @class = "text-danger" })
+
+                </div>
+                <div>
+                    @Html.LabelFor(x => x.PaitentName)
+                    @Html.TextBoxFor(x => x.PaitentName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.PaitentName, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.LabelFor(x => x.Hospitalorhome)
+                    @Html.TextBoxFor(x => x.Hospitalorhome, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Hospitalorhome, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.LabelFor(x => x.ContactNo)
+                    @Html.TextBoxFor(x => x.ContactNo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.ContactNo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*Reasons Table*@
+            <div class="col-6">
+                <h4>Reasons for Unrecovered</h4>
+                <table class="table table-bordered table-sm">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Sr #</th>
+                            <th>Disease Name</th>
+                            <th>Improper PlasmaCollection</th>
+                            <th>Critical State</th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @*script for tbparts line 116*@
+                    <tbody id="tbparts"></tbody>
+                </table>
+                @*Inine Form*@
+                <div class="form-inline">
+                    <label class="sr-only" for="DiseaseName">Disease Name</label>
+                    <input type="Text" class="form-control mb-2 mr-sm-2" name="DiseaseName" id="DiseaseName" placeholder="Disease Name">
+
+                    <label class="sr-only" for="ImproperPlasma">Improper Plasma</label>
+                    <input type="Text" class="form-control mb-2 mr-sm-2" name="ImproperPlasma" id="ImproperPlasma" placeholder="Improper Plasma">
+
+                    <label class="sr-only" for="CriticalState">Critical State</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" name="CriticalState" id="CriticalState" placeholder="Critical State">
+                    @*<input type="checkbox" class="form-control mb-2 mr-sm-2" name="CriticalState" id="CriticalState" value="true" placeholder="Critical State">*@
+
+
+                    @*script for button addReasons line 133*@
+                    <button type="button" id="addReasons" class="btn btn-success  mb-2">Add</button>
+                </div>
+
+            </div>
+            <div class="col-12 mt-2">
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary" id="save">Save All</button>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+    @section styles{
+
+    }
+    @section scripts
+{
+
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+        <script>
+        var coronapaitent = {
+            PaitentName: "",
+            Hospitalorhome: "",
+            ContactNo: "",
+            PlasmaDonationId: 0,
+            ReasonsforNotRecoveredCoronaPaitents: []
+
+        }
+        $(document).ready(function () {
+            //$('#dt-picker input').datepicker({
+            //    format: 'yyyy-mm-dd'
+            //});
+            if (coronapaitent.ReasonsforNotRecoveredCoronaPaitents.length == 0) {
+                $("#tbparts").append("<tr><td colspan='6'>No Reasons added.</td></tr>");
+            }
+            else {
+                for (var i = 0; i < coronapaitent.ReasonsforNotRecoveredCoronaPaitents.length; i++) {
+                    $("#tbparts").append(`<tr>
+                                            <td>${i + 1}</td>
+                                            <td >${coronapaitent.ReasonsforNotRecoveredCoronaPaitents[i].DiseaseName}</td >
+                                            <td >${coronapaitent.ReasonsforNotRecoveredCoronaPaitents[i].ImproperPlasma}</td >
+                                            <td >${coronapaitent.ReasonsforNotRecoveredCoronaPaitents[i].CriticalState}</td >
+                                            //<td>if($("input[type='checkbox'[name='check']:checked").length){ true }else{ }</td>
+
+                                            <td><button data-act='del'  data-index='${i}' type="button" class='btn btn-primary btn-sm del'>&times;</button>
+                                    </tr>`);
+                }
+                $("button[data-act='del']").addClass('btn btn-info btn-sm del');
+            }
+            //Inlineform button id addReasons
+            $("#addReasons").click(function () {
+                coronapaitent.ReasonsforNotRecoveredCoronaPaitents.push({ DiseaseName: $("#DiseaseName").val(), ImproperPlasma: $("#ImproperPlasma").val(), CriticalState: $("#CriticalState").val()})
+                $("#tbparts").append(`<tr>
+                                            <td>${coronapaitent.ReasonsforNotRecoveredCoronaPaitents.length}</td>
+                                            <td >${$("#DiseaseName").val()}</td>
+                                            <td >${$("#ImproperPlasma").val()}</td>
+                                            <td >${$("#CriticalState").val()}</td>
+
+                                            <td><button data-act='del' data-index='${coronapaitent.ReasonsforNotRecoveredCoronaPaitents.length-1}' type="button" class="btn btn-primary btn-sm del">&times;</button>
+                                    </tr>`);
+                $("button[data-act='del']").addClass('btn btn-info btn-sm del')
+            })
+            $("#save").click(function (evt) {
+                //alert("Save");
+                evt.preventDefault();
+                evt.stopPropagation();
+                if ($("#feq").valid()) {
+                    console.log('Ok');
+                    coronapaitent.PlasmaDonationId = $("#PlasmaDonationId").val();
+                    coronapaitent.PaitentName = $("#PaitentName").val();
+                    coronapaitent.Hospitalorhome = $("#Hospitalorhome").val();
+                    coronapaitent.ContactNo = $("#ContactNo").val();
+
+                    console.log(coronapaitent);
+                    //controller will run code
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("CreatePost", "CoronaPaitentAndReasons")",
+
+                        data: coronapaitent,
+                        dataType: "json"
+                    }).done(function (r) {
+                        console.log(r);
+                        if (r.success == true) {
+                            $("#alert").removeClass("alert-warning").addClass("alert-success").show();
+                            $("#msg-heading").html("Success");
+                            $("#msg").html(r.message);
+                            $("#feq").trigger("reset");
+                            coronapaitent = {
+                                PaitentName: "",
+                                Hospitalorhome: "",
+                                ContactNo: "",
+                                PlasmaDonationId: 0,
+                                ReasonsforNotRecoveredCoronaPaitents: []
+                            }
+
+                            $("#tbparts").empty();
+                            $("#tbparts").append("<tr><td colspan='6'>No Reasons added.</td></tr>");
+
+                        }
+                        else {
+                            $("#alert").removeClass("alert-success").addClass("alert-warning").show();
+                            $("#msg-heading").html("Error");
+                            $("#msg").html(r.message);
+                        }
+
+                    }).fail(function (err) {
+                        console.log(err);
+                    });
+                }
+                else {
+                    console.log('Not Ok');
+                    if (coronapaitent.ReasonsforNotRecoveredCoronaPaitents.length == 0) {
+
+                    }
+                }
+
+
+            })
+            $('body').on("click", "button.del", function (evt) {
+
+                var b = $(this);
+                var tr = b.closest('tr');
+                var i = b.data("index");
+                console.log(i);
+                tr.remove();
+                coronapaitent.ReasonsforNotRecoveredCoronaPaitents.splice(i, 1);
+                console.log(coronapaitent.ReasonsforNotRecoveredCoronaPaitents);
+                $("#tbparts").empty();
+                if (coronapaitent.ReasonsforNotRecoveredCoronaPaitents.length == 0) {
+                    $("#tbparts").append("<tr><td colspan='6'>No Reasons added.</td></tr>");
+                }
+                else {
+                    for (var i = 0; i < coronapaitent.ReasonsforNotRecoveredCoronaPaitents.length; i++) {
+                        $("#tbparts").append(`<tr>
+                                            <td>${i + 1}</td>
+                                            <td >${coronapaitent.ReasonsforNotRecoveredCoronaPaitents[i].DiseaseName}</td >
+                                            <td >${coronapaitent.ReasonsforNotRecoveredCoronaPaitents[i].ImproperPlasma}</td >
+                                            <td >${coronapaitent.ReasonsforNotRecoveredCoronaPaitents[i].CriticalState}</td >
+
+
+                                            <td><button data-act='del'  data-index='${i}' type="button" class='btn btn-primary btn-sm del'>&times;</button>
+                                    </tr>`);
+                    }
+                    $("button[data-act='del']").addClass('btn btn-info btn-sm del');
+                }
+                evt.preventDefault();
+
+            })
+
+        })
+        </script>
+    }

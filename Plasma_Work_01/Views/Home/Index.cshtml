@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="background-color:lightskyblue; text-align:center;">
+    <h3>HOME</h3>
+    <div class="jumbotron">
+        <h5 class="display-4">PLASMA COLLECTION</h5>
+
+    </div>
+    <div class="row">
+
+        <div class="card-deck">
+            <div class="card mr-2 mb-1" style="min-width: 25rem;">
+                <div class="card-body">
+                    <h4 class="card-title">Table One</h4>
+                    <div class="card-text"></div>
+                    @Html.ActionLink("Plasma Donation", "Index", "PlasmaDonations", new { }, new { @class = "nav-link" })
+                </div>
+            </div>
+
+
+            <div class="card mr-2  mb-1" style="min-width: 25rem;">
+                <div class="card-body">
+                    <h4 class="card-title">Table Two</h4>
+                    <div class="card-text"></div>
+                    @Html.ActionLink("Corona Positive Paitent", "Index", "CoronaPaitents", new { }, new { @class = "nav-link" })
+                </div>
+            </div>
+            <div class="card mr-2  mb-1" style="min-width: 25rem;">
+                <div class="card-body">
+                    <h4 class="card-title">Table Three</h4>
+                    <div class="card-text"></div>
+                    @Html.ActionLink("Reasons for Unrecovered Corona Paitent", "Index", "ReasonsUnrecovered", new { }, new { @class = "nav-link" })
+                </div>
+            </div>
+            <div class="card mr-2  mb-1" style="min-width: 25rem;">
+            <div class="card-body">
+                <h4 class="card-title">Larn About Corona</h4>
+                <div class="card-text">
+                    <a href="https://www.youtube.com/watch?time_continue=146&v=08Pb-UZPLiU&feature=emb_logo/">You tube video</a>
+                </div>
+            </div>
+        </div>
+           
+        </div>
+
+    </div>
+
+</div>
+

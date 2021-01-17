@@ -1,0 +1,131 @@
+﻿@model IEnumerable<Plasma_Work_01.Models.PlasmaDonation>
+@{
+    ViewBag.Title = "CoronaPaitent and Reasons for Unrecover";
+}
+<div style="background-color:lightsalmon">
+    <h2>Corona Paitent and Reasons for Unrecovered</h2>
+    <div class="d-flex justify-content-end mb-1">
+        @Html.ActionLink("Create New", "Create", "CoronaPaitentAndReasons", new { }, new { @class = "btn btn-primary" })
+
+    </div>
+    <table class="table table-bordered" style="background-color:lightcyan">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th>
+                    Donation Id
+                </th>
+                <th>
+                    Donator name
+                </th>
+                <th>
+                    Blood Group
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td><button type="button" class="btn select" data-pdi="@t.PlasmaDonationId"><i class="fa fa-plus"></i></button></td>
+                    <td>@t.PlasmaDonationId</td>
+                    <td>@t.DonatorName</td>
+                    <td>@t.BloodGroup</td>
+                </tr>
+                <tr style="display:none" id="@("cdi" + t.PlasmaDonationId)">
+                    <td colspan="4">
+                        <table class="table table-bordered table-sm" style="background-color:lightgreen">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Paitent Name</th>
+                                    <th>Hospital or Home</th>
+                                    <th>Contact No</th>
+                                    @*<th>Reasons For Not Recovered</th>*@
+                                    <th>.....</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var c in t.CoronaPositivePaitents)
+                                {
+                                    <tr>
+                                        <td>
+                                            @c.PaitentName
+                                        </td>
+                                        <td>
+                                            @c.Hospitalorhome
+                                        </td>
+                                        <td>
+                                            @c.ContactNo
+                                        </td>
+                                        @*<td>
+                                                @c.ReasonsforNotRecoveredCoronaPaitents
+                                            </td>*@
+
+                                        <td>
+                                            <button type="button" class="btn reasons" data-rdi="@c.CoronaPositivePaitentId"><i class="fa fa-plus"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr style="display:none" id="@("notworking"+c.CoronaPositivePaitentId)">
+                                        <td colspan="4">
+                                            <table class="table table-bordered" style="background-color:lightpink">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Disease Name</th>
+                                                        <th>Improper Plasma Collection</th>
+                                                        <th>Critical State</th>
+                                                        @*<th>Age</th>*@
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var r in c.ReasonsforNotRecoveredCoronaPaitents)
+                                                    {
+                                                        <tr>
+                                                            <td>@r.DiseaseName</td>
+                                                            <td>@r.ImproperPlasma</td>
+                                                            <td>@r.CriticalState</td>
+                                                            @*<td>@r.Age</td>*@
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section styles{
+
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+}
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            $("button.select").click(function () {
+
+                //console.log($(this).data("pdi"));
+                var tid = $(this).data("pdi");
+                $("#cdi" + tid).toggle();
+                $(this).find("i").toggleClass("fa-plus fa-minus");
+            });
+            $("button.reasons").click(function () {
+                var pid = $(this).data("rdi");
+                $("#notworking" + pid).toggle();
+                $(this).find("i").toggleClass("fa-plus fa-minus");
+
+            });
+        });
+    </script>
+}
+

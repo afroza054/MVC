@@ -1,0 +1,54 @@
+﻿@model Plasma_Work_01.Models.PlasmaDonation
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="card" style="width: 50rem; background-color:lightcyan; position:center;">
+    <div class="card-body">
+
+        <img src="~/Pictures/bg8.jpg" class="card-img-top" height="270" alt="Pic">
+        <h4 class="card-title" style="text-align:center">Edit Plasma Donation</h4>
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(x => x.PlasmaDonationId)
+
+            <div class="form-group row">
+                @Html.LabelFor(x => x.DonatorName, new { @class = "col-form-label col-2" })
+                <div class="col-4">
+                    @Html.TextBoxFor(x => x.DonatorName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.DonatorName, null, new { @class = "text-danger" })
+                </div>
+            </div>
+   
+            <div class="form-group row">
+                @Html.LabelFor(x => x.BloodGroup, new { @class = "col-form-label col-2" })
+                <div class="col-4">
+                    @Html.EnumDropDownListFor(x => x.BloodGroup, "--Select one--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.BloodGroup, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-4 offset-3">
+                    <input type="submit" value="Save" class="btn btn-success btn-sm" />
+                    <span class="fa fa-spinner fa-plus fa-2x" id="spin" style="display:none"></span>
+                </div>
+            </div>
+        }
+        @Html.ActionLink("Back to Donation Page", "Index")
+    </div>
+</div>
+@section styles{
+    
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+}
+@section scripts{
+    
+
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+}
+

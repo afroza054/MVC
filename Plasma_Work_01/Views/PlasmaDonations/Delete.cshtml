@@ -1,0 +1,42 @@
+﻿@model Plasma_Work_01.Models.PlasmaDonation
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="card" style="width: 50rem; background-color:lightcyan; position:center;">
+    <div class="card-body">
+
+        <img src="~/Pictures/bg6.jpg" style="opacity:40" class="card-img-top" height="270" alt="Pic">
+        <h4 class="card-title" style="text-align:center">Delete Donation Record</h4>
+
+        <div class="row">
+            <div class="col-2 text-right">
+                Donator Name:
+            </div>
+            <div class="offset-1">
+                @Model.DonatorName
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-2 text-right">
+                Blood Group:
+            </div>
+            <div class="offset-2">
+                @Model.BloodGroup
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-4 offset-3">
+                @using (Html.BeginForm())
+                {
+                    @Html.HiddenFor(x => x.PlasmaDonationId)
+                    <input type="submit" value="Confirm" class="btn btn-danger btn-sm" />
+                }
+            </div>
+        </div>
+        @Html.ActionLink("Back to Plasma Donation", "Index")
+    </div>
+</div>
+

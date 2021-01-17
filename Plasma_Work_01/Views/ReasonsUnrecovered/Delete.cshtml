@@ -1,0 +1,59 @@
+﻿@model Plasma_Work_01.Models.ReasonsforNotRecoveredCoronaPaitent
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="card" style="width: 50rem; background-color:lightsalmon; position:center;">
+    <div class="card-body">
+
+        <img src="~/Pictures/bg6.jpg" style="opacity:40" class="card-img-top" height="270" alt="Pic">
+        <h4 class="card-title" style="text-align:center">Delete Reasons For Unrecovered Record</h4>
+
+        <div class="row">
+            <div class="col-2 text-right">
+                Disease Name
+            </div>
+            <div>
+                @Model.DiseaseName
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-right">
+                Improper Plasma
+            </div>
+            <div>
+                @Model.ImproperPlasma
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-right">
+                Critical State
+            </div>
+            <div>
+                @Model.CriticalState
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-2 text-right">
+               Corona Paitent ID
+            </div>
+            <div>
+                @Model.CoronaPositivePaitentId
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                @using (Html.BeginForm())
+                {
+                    @Html.HiddenFor(x => x.ReasonsforNotRecoveredCoronaPaitentId)
+                    <input type="submit" value="Confirm" class="btn btn-danger btn-sm" />
+                }
+            </div>
+
+        </div>
+    </div>
+    @Html.ActionLink("Back to Reasons Unrecovered", "Index")
+</div>
+

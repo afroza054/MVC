@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Plasma_Work_01.Models.CoronaPositivePaitent>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="background-color:lightcyan">
+    <h3 style="text-align:center">Corona Positive Paitent</h3>
+    <div class="d-flex justify-content-end mb-1">
+       
+        <a href="@Url.Action("Create", "CoronaPaitents")" class="btn btn-success"><i class="fa fa-plus"></i>Create New</a>
+
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(x => x.CoronaPositivePaitentId)</th>
+                <th>@Html.DisplayNameFor(x => x.PaitentName)</th>
+                
+                <th>@Html.DisplayNameFor(x => x.Hospitalorhome)</th>
+                <th>@Html.DisplayNameFor(x => x.ContactNo)</th>
+                <th>Plasma Donator</th>
+                <th>Edit or Delete</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pd in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(x => pd.CoronaPositivePaitentId)</td>
+                    <td>@Html.DisplayFor(x => pd.PaitentName)</td>
+                    <td>@Html.DisplayFor(x => pd.Hospitalorhome)</td>
+                    <td>@Html.DisplayFor(x => pd.ContactNo)</td>
+                    <td>@Html.DisplayFor(x => pd.PlasmaDonation.DonatorName)</td>
+
+                    <td>
+                        <a class="btn btn-info btn sm" href="@Url.Action("Edit", "CoronaPaitents", new { id = pd.CoronaPositivePaitentId})"><i class="fa fa-pencil"></i>Edit</a>
+                        <a class="btn btn-danger btn sm" href="@Url.Action("Delete", "CoronaPaitents", new { id = pd.CoronaPositivePaitentId})"><i class="fa fa-trash"></i>Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="d-flex justify-content-end">
+    <ul class="pagination pagination-sm">
+        @for (var i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            if (i == ViewBag.CurrentPage)
+            {
+                <li class="page-item active">
+                    @Html.ActionLink(i.ToString(), "Index", "CoronaPaitents", new { page = i }, new { @class = "page-link" })
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    @Html.ActionLink(i.ToString(), "Index", "CoronaPaitents", new { page = i }, new { @class = "page-link" })
+                </li>
+            }
+        }
+    </ul>
+</div>
+@section styles{
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+}
+
